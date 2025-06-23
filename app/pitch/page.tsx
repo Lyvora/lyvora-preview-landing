@@ -184,7 +184,11 @@ export default function PitchPage() {
       <section className="py-16 sm:py-20 pt-28 sm:pt-32 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div className="text-center mb-12 sm:mb-16" variants={fadeInUp} initial="initial" animate="animate">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 px-2">What is Lyvora?</h1>
+            {/* <Badge className="mb-4 sm:mb-6 bg-purple-500/20 text-purple-200 border-purple-500/30 text-xs sm:text-sm">
+              <Rocket className="mr-2 h-3 w-3" />
+              Our Pitch
+            </Badge> */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mt-12 sm:mt-16 md:mt-14 mb-4 sm:mb-6 px-2">What is Lyvora?</h1>
             <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto px-4">
               A decentralized marketplace for real-world products — powered by crypto payments, smart contracts, and
               transparent on-chain reputation.
@@ -196,29 +200,66 @@ export default function PitchPage() {
       {/* Key Features */}
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4 sm:px-6">
+          {/* Section Header */}
           <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16"
+            className="text-center mb-12 sm:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Core Principles</h2>
+            <p className="text-lg text-white/60 max-w-2xl mx-auto">Built on the foundation of true decentralization</p>
+          </motion.div>
+
+          {/* Simple Feature Grid */}
+          <motion.div
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-12 sm:mb-16"
             variants={staggerContainer}
             initial="initial"
             animate="animate"
           >
             {[
-              { icon: Zap, text: "No fixed fees" },
-              { icon: Globe, text: "No borders" },
-              { icon: Users, text: "No middlemen" },
-              { icon: Shield, text: "No account freezing" },
+              {
+                icon: Zap,
+                text: "No fixed fees",
+                iconColor: "text-yellow-400",
+              },
+              {
+                icon: Globe,
+                text: "No borders",
+                iconColor: "text-blue-400",
+              },
+              {
+                icon: Users,
+                text: "No middlemen",
+                iconColor: "text-green-400",
+              },
+              {
+                icon: Shield,
+                text: "No account freezing",
+                iconColor: "text-purple-400",
+              },
             ].map((feature, index) => (
-              <motion.div key={index} variants={fadeInUp} className="text-center">
-                <div className="h-10 w-10 sm:h-12 sm:w-12 bg-purple-500/20 rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                  <feature.icon className="h-5 w-5 sm:h-6 sm:w-6 text-purple-400" />
-                </div>
-                <p className="text-white/80 text-sm sm:text-base">{feature.text}</p>
+              <motion.div key={index} variants={fadeInUp} className="text-center group">
+                <motion.div
+                  className="mb-4"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <div className="h-16 w-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto border border-white/10 group-hover:border-white/20 transition-colors duration-300">
+                    <feature.icon className={`h-8 w-8 ${feature.iconColor}`} />
+                  </div>
+                </motion.div>
+                <p className="text-white/80 font-medium text-sm sm:text-base group-hover:text-white transition-colors duration-300">
+                  {feature.text}
+                </p>
               </motion.div>
             ))}
           </motion.div>
 
+          {/* Simple Call-to-Action */}
           <motion.div
-            className="text-center mb-12 sm:mb-16"
+            className="text-center"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
@@ -479,10 +520,10 @@ export default function PitchPage() {
       <section className="py-16 sm:py-20 bg-gradient-to-r from-purple-900/20 to-blue-900/20">
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6">Join the Movement</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6">Join the Lyvora</h2>
             <p className="text-white/70 mb-6 sm:mb-8 max-w-2xl mx-auto">
               We're just getting started. If you believe in a fairer, more transparent, decentralized future for
-              commerce — join us.
+              commerce - join us.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
