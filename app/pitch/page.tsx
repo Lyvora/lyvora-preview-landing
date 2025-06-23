@@ -51,7 +51,7 @@ const slideInRight = {
 export default function PitchPage() {
   const { scrollYProgress } = useScroll()
   const headerOpacity = useTransform(scrollYProgress, [0, 0.1], [0.95, 0.98])
-  const headerBlur = useTransform(scrollYProgress, [0, 0.1], [20, 30])
+  const headerBlur = useTransform(scrollYProgress, [0, 0.1], [30, 50])
 
   // Add this state variable in the component
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -67,61 +67,64 @@ export default function PitchPage() {
         style={{ opacity: headerOpacity }}
       >
         <motion.div
-          className="rounded-2xl bg-black/95 backdrop-blur-xl border border-white/20 header-shadow"
+          className="rounded-2xl bg-black/90 backdrop-blur-2xl border border-white/20 header-shadow relative overflow-hidden"
           style={{ backdropFilter: `blur(${headerBlur}px)` }}
         >
-          <div className="container mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
-              <motion.div
-                className="flex items-center"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
-                <Link href="/" className="flex items-center space-x-3">
-                  <Image src="/logo-new.png" alt="Lyvora" width={50} height={16} className="brightness-0 invert" />
-                  <span className="text-white font-bold tracking-tight text-3xl">Lyvora</span>
-                </Link>
-              </motion.div>
-
-              {/* Desktop Navigation */}
-              <nav className="hidden md:flex items-center space-x-1">
-                {[
-                  { name: "Vision", href: "/vision" },
-                  { name: "Pitch", href: "/pitch" },
-                  { name: "Features", href: "/#features" },
-                  { name: "Roadmap", href: "/#roadmap" },
-                ].map((item, index) => (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <Link
-                      href={item.href}
-                      className="relative px-4 py-2 text-sm text-white/70 hover:text-white transition-all duration-300 group"
-                    >
-                      <span className="relative z-10 text-2xl">{item.name}</span>
-                      <motion.div
-                        className="absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        whileHover={{ scale: 1.05 }}
-                      />
-                      <motion.div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 group-hover:w-full group-hover:left-0 transition-all duration-300" />
-                    </Link>
-                  </motion.div>
-                ))}
-              </nav>
-
-              {/* Mobile Menu Button */}
-              <motion.button
-                className="md:hidden relative p-2 text-white"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                whileTap={{ scale: 0.95 }}
-              >
-                <motion.div animate={mobileMenuOpen ? { rotate: 180 } : { rotate: 0 }} transition={{ duration: 0.3 }}>
-                  {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 backdrop-blur-sm" />
+          <div className="relative z-10">
+            <div className="container mx-auto px-6 py-4">
+              <div className="flex items-center justify-between">
+                <motion.div
+                  className="flex items-center"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <Link href="/" className="flex items-center space-x-3">
+                    <Image src="/logo-new.png" alt="Lyvora" width={50} height={16} className="brightness-0 invert" />
+                    <span className="text-white font-bold tracking-tight text-3xl">Lyvora</span>
+                  </Link>
                 </motion.div>
-              </motion.button>
+
+                {/* Desktop Navigation */}
+                <nav className="hidden md:flex items-center space-x-1">
+                  {[
+                    { name: "Vision", href: "/vision" },
+                    { name: "Pitch", href: "/pitch" },
+                    { name: "Features", href: "/#features" },
+                    { name: "Roadmap", href: "/#roadmap" },
+                  ].map((item, index) => (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                    >
+                      <Link
+                        href={item.href}
+                        className="relative px-4 py-2 text-sm text-white/70 hover:text-white transition-all duration-300 group"
+                      >
+                        <span className="relative z-10 text-2xl">{item.name}</span>
+                        <motion.div
+                          className="absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          whileHover={{ scale: 1.05 }}
+                        />
+                        <motion.div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 group-hover:w-full group-hover:left-0 transition-all duration-300" />
+                      </Link>
+                    </motion.div>
+                  ))}
+                </nav>
+
+                {/* Mobile Menu Button */}
+                <motion.button
+                  className="md:hidden relative p-2 text-white"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <motion.div animate={mobileMenuOpen ? { rotate: 180 } : { rotate: 0 }} transition={{ duration: 0.3 }}>
+                    {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                  </motion.div>
+                </motion.button>
+              </div>
             </div>
           </div>
 
@@ -133,7 +136,7 @@ export default function PitchPage() {
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
-                className="md:hidden border-t border-white/10 bg-black/95 backdrop-blur-lg rounded-b-2xl"
+                className="md:hidden border-t border-white/10 bg-black/90 backdrop-blur-2xl rounded-b-2xl"
               >
                 <div className="px-6 py-6 space-y-4">
                   {[
@@ -181,10 +184,6 @@ export default function PitchPage() {
       <section className="py-16 sm:py-20 pt-28 sm:pt-32 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div className="text-center mb-12 sm:mb-16" variants={fadeInUp} initial="initial" animate="animate">
-            <Badge className="mb-4 sm:mb-6 bg-purple-500/20 text-purple-200 border-purple-500/30 text-xs sm:text-sm">
-              <Rocket className="mr-2 h-3 w-3" />
-              Our Pitch
-            </Badge>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 px-2">What is Lyvora?</h1>
             <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto px-4">
               A decentralized marketplace for real-world products — powered by crypto payments, smart contracts, and
