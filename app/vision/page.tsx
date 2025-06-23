@@ -1,106 +1,64 @@
 "use client"
-import { useState, useEffect } from "react"
+
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { EnhancedCard, EnhancedCardContent, EnhancedCardHeader, EnhancedCardTitle } from "@/components/ui/enhanced-card"
 import { Badge } from "@/components/ui/badge"
 import {
-  Shield,
-  Zap,
-  TrendingUp,
   CheckCircle,
-  ArrowRight,
-  Star,
+  Globe,
   Target,
-  Rocket,
+  TrendingUp,
+  Users,
+  ArrowRight,
   Menu,
   X,
-  Users,
   Sparkles,
+  Rocket,
+  Star,
+  Shield,
+  Zap,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion"
+import { useState } from "react"
 
-// Animation variants
-const fadeInUp = {
-  initial: { opacity: 0, y: 60 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] },
-}
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-}
-
-const scaleIn = {
-  initial: { opacity: 0, scale: 0.8 },
-  animate: { opacity: 1, scale: 1 },
-  transition: { duration: 0.5, ease: [0.6, -0.05, 0.01, 0.99] },
-}
-
-const slideInLeft = {
-  initial: { opacity: 0, x: -100 },
-  animate: { opacity: 1, x: 0 },
-  transition: { duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] },
-}
-
-const slideInRight = {
-  initial: { opacity: 0, x: 100 },
-  animate: { opacity: 1, x: 0 },
-  transition: { duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] },
-}
-
-export default function LyvoraLanding() {
+// Add this state variable in the component
+const VisionPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [scrollY, setScrollY] = useState(0)
+
+  const fadeInUp = {
+    initial: { opacity: 0, y: 60 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] },
+  }
+
+  const staggerContainer = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const slideInLeft = {
+    initial: { opacity: 0, x: -100 },
+    animate: { opacity: 1, x: 0 },
+    transition: { duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] },
+  }
+
+  const slideInRight = {
+    initial: { opacity: 0, x: 100 },
+    animate: { opacity: 1, x: 0 },
+    transition: { duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] },
+  }
 
   const { scrollYProgress } = useScroll()
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50])
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
-  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 }
-  const scaleSpring = useSpring(scale, springConfig)
-
-  // Header opacity based on scroll
   const headerOpacity = useTransform(scrollYProgress, [0, 0.1], [0.95, 0.98])
-  const headerBlur = useTransform(scrollYProgress, [0, 0.1], [30, 50])
-
-  // Mouse tracking for hero gradient
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      setScrollY(currentScrollY)
-    }
-
-    window.addEventListener("mousemove", handleMouseMove)
-    window.addEventListener("scroll", handleScroll)
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+  const headerBlur = useTransform(scrollYProgress, [0, 0.1], [20, 30])
 
   return (
     <div className="min-h-screen bg-black overflow-x-hidden">
-      {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute inset-0 opacity-30"
-          style={{
-            background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(147, 51, 234, 0.15), transparent 40%)`,
-          }}
-        />
-      </div>
-
-      {/* Enhanced Header with Shadow Gradient and Opacity */}
+      {/* Enhanced Header with Shadow Gradient and Opacity - Same as Main Page */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -109,815 +67,573 @@ export default function LyvoraLanding() {
         style={{ opacity: headerOpacity }}
       >
         <motion.div
-          className="rounded-2xl bg-black/90 backdrop-blur-2xl border border-white/20 header-shadow relative overflow-hidden"
+          className="rounded-2xl bg-black/95 backdrop-blur-xl border border-white/20 header-shadow"
           style={{ backdropFilter: `blur(${headerBlur}px)` }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20 backdrop-blur-sm" />
-          <div className="relative z-10">
-            <div className="container mx-auto px-6 py-4">
-              <div className="flex items-center justify-between">
-                <motion.div
-                  className="flex items-center"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <Link href="/" className="flex items-center space-x-3">
-                    <Image src="/logo-new.png" alt="Lyvora" width={50} height={16} className="brightness-0 invert" />
-                    <span className="text-white font-bold tracking-tight text-3xl">Lyvora</span>
-                  </Link>
-                </motion.div>
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <motion.div
+                className="flex items-center"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <Link href="/" className="flex items-center space-x-3">
+                  <Image src="/logo-new.png" alt="Lyvora" width={50} height={16} className="brightness-0 invert" />
+                  <span className="text-white font-bold tracking-tight text-3xl">Lyvora</span>
+                </Link>
+              </motion.div>
 
-                {/* Desktop Navigation */}
-                <nav className="hidden md:flex items-center space-x-1">
+              {/* Desktop Navigation */}
+              <nav className="hidden md:flex items-center space-x-1">
+                {[
+                  { name: "Vision", href: "/vision" },
+                  { name: "Pitch", href: "/pitch" },
+                  { name: "Features", href: "/#features" },
+                  { name: "Roadmap", href: "/#roadmap" },
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.name}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <Link
+                      href={item.href}
+                      className="relative px-4 py-2 text-sm text-white/70 hover:text-white transition-all duration-300 group"
+                    >
+                      <span className="relative z-10 text-2xl">{item.name}</span>
+                      <motion.div
+                        className="absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        whileHover={{ scale: 1.05 }}
+                      />
+                      <motion.div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 group-hover:w-full group-hover:left-0 transition-all duration-300" />
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+
+              {/* Mobile Menu Button */}
+              <motion.button
+                className="md:hidden relative p-2 text-white"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                whileTap={{ scale: 0.95 }}
+              >
+                <motion.div animate={mobileMenuOpen ? { rotate: 180 } : { rotate: 0 }} transition={{ duration: 0.3 }}>
+                  {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                </motion.div>
+              </motion.button>
+            </div>
+          </div>
+
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="md:hidden border-t border-white/10 bg-black/95 backdrop-blur-lg rounded-b-2xl"
+              >
+                <div className="px-6 py-6 space-y-4">
                   {[
                     { name: "Vision", href: "/vision" },
                     { name: "Pitch", href: "/pitch" },
-                    { name: "Features", href: "#features" },
-                    { name: "Roadmap", href: "#roadmap" },
+                    { name: "Features", href: "/#features" },
+                    { name: "Roadmap", href: "/#roadmap" },
                   ].map((item, index) => (
                     <motion.div
                       key={item.name}
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
                     >
                       <Link
                         href={item.href}
-                        className="relative px-4 py-2 text-sm text-white/70 hover:text-white transition-all duration-300 group"
+                        className="block text-white/70 hover:text-white transition-colors text-sm py-2"
+                        onClick={() => setMobileMenuOpen(false)}
                       >
-                        <span className="relative z-10 text-2xl">{item.name}</span>
-                        <motion.div
-                          className="absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                          whileHover={{ scale: 1.05 }}
-                        />
-                        <motion.div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 group-hover:w-full group-hover:left-0 transition-all duration-300" />
+                        {item.name}
                       </Link>
                     </motion.div>
                   ))}
-
                   <motion.div
-                    className="ml-4"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                  ></motion.div>
-                </nav>
-
-                {/* Mobile Menu Button */}
-                <motion.button
-                  className="md:hidden relative p-2 text-white"
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <motion.div animate={mobileMenuOpen ? { rotate: 180 } : { rotate: 0 }} transition={{ duration: 0.3 }}>
-                    {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                  </motion.div>
-                </motion.button>
-              </div>
-            </div>
-
-            {/* Mobile Menu */}
-            <AnimatePresence>
-              {mobileMenuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="md:hidden border-t border-white/10 bg-black/90 backdrop-blur-2xl rounded-b-2xl"
-                >
-                  <div className="px-6 py-6 space-y-4">
-                    {[
-                      { name: "Vision", href: "/vision" },
-                      { name: "Pitch", href: "/pitch" },
-                      { name: "Features", href: "#features" },
-                      { name: "Roadmap", href: "#roadmap" },
-                    ].map((item, index) => (
-                      <motion.div
-                        key={item.name}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                      >
-                        <Link
-                          href={item.href}
-                          className="block text-white/70 hover:text-white transition-colors text-sm py-2"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {item.name}
-                        </Link>
-                      </motion.div>
-                    ))}
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: 0.4 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.4 }}
+                  >
+                    <Button
+                      size="sm"
+                      className="bg-gradient-to-r from-purple-900 to-black text-gray-300 w-full hover:text-gray-200"
                     >
-                      <Button
-                        size="sm"
-                        className="bg-gradient-to-r from-purple-900 to-black text-gray-300 w-full hover:text-gray-200"
-                      >
-                        <Sparkles className="mr-2 h-3 w-3" />
-                        Launch App
-                      </Button>
-                    </motion.div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                      <Sparkles className="mr-2 h-3 w-3" />
+                      Launch App
+                    </Button>
+                  </motion.div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </motion.header>
 
-      {/* Hero Section with Enhanced Animations */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        {/* Animated Grid Background */}
-        <div className="absolute inset-0 overflow-hidden">
-          <motion.div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(147, 51, 234, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(147, 51, 234, 0.1) 1px, transparent 1px)
-              `,
-              backgroundSize: "50px 50px",
-            }}
-            animate={{
-              backgroundPosition: ["0px 0px", "50px 50px"],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "linear",
-            }}
-          />
-          <motion.div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px)
-              `,
-              backgroundSize: "100px 100px",
-            }}
-            animate={{
-              backgroundPosition: ["0px 0px", "-100px -100px"],
-            }}
-            transition={{
-              duration: 30,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "linear",
-            }}
-          />
-        </div>
-
-        {/* Enhanced Animated Gradient Background */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-purple-900/50 via-purple-600/30 to-transparent"
-          style={{ y, opacity, scale: scaleSpring }}
-        />
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
-          style={{ y: useTransform(scrollYProgress, [0, 1], [0, -100]) }}
-        />
-
-        {/* Enhanced Floating Elements */}
-        {/* {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className={`absolute w-1 h-1 bg-purple-400 rounded-full`}
-            style={{
-              top: `${15 + i * 12}%`,
-              left: `${8 + i * 12}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              opacity: [0.2, 1, 0.2],
-              scale: [1, 2, 1],
-            }}
-            transition={{
-              duration: 4 + i * 0.5,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-              delay: i * 0.3,
-            }}
-          />
-        ))} */}
-
-        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          ></motion.div>
-
-          <motion.h1
-            className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight px-2"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <motion.span
-              className="inline-block bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              A New Era
-            </motion.span>
-            <br />
-            <motion.span
-              className="inline-block bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              A New Marketplace
-            </motion.span>
-          </motion.h1>
-
-          <motion.p
-            className="text-lg sm:text-xl md:text-2xl text-white/80 mb-3 sm:mb-4 font-medium px-2"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            Only 2.5% fee. No borders. No middlemen.
-          </motion.p>
-
-          <motion.p
-            className="text-base sm:text-lg text-white/60 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            Take control of your commerce stack — easily tokenize assets, optimize margins, comply with PCI, avoid
-            gateway lock-in, or spin-up card issuing programs.
-          </motion.p>
-
-          <motion.div
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
-          >
-            <motion.div
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 20px 40px rgba(255, 255, 255, 0.1)",
-                y: -2,
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-purple-900 to-black text-gray-300 px-6 sm:px-8 py-3 text-sm sm:text-base font-medium transition-all duration-300 shadow-xl hover:text-gray-200 w-full sm:w-auto"
-              >
-                <Rocket className="mr-2 h-4 w-4" />
-                Launch App
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </motion.div>
-            <motion.div
-              whileHover={{
-                scale: 1.05,
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
-                borderColor: "rgba(147, 51, 234, 0.5)",
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-gradient-to-r from-purple-900 to-black text-gray-300 border-purple-500/30 px-6 sm:px-8 py-3 text-sm sm:text-base font-medium transition-all duration-300 hover:text-gray-200 w-full sm:w-auto"
-                asChild
-              >
-                <Link href="/vision">
-                  <Users className="mr-2 h-4 w-4" />
-                  Our Vision
-                </Link>
-              </Button>
-            </motion.div>
+      {/* Hero Section */}
+      <section className="py-16 sm:py-20 pt-28 sm:pt-32 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20">
+        <div className="container mx-auto px-4 sm:px-6 mt-12 sm:mt-8">
+          <motion.div className="text-center mb-8 sm:mb-4" variants={fadeInUp} initial="initial" animate="animate">
+            <Badge className="mb-4 sm:mb-6 bg-purple-500/20 text-purple-200 border-purple-500/30 text-xs sm:text-sm">
+              <Rocket className="mr-2 h-3 w-3" />
+              Our Vision
+            </Badge>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 px-2">
+              Why We Exist
+            </h1>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 px-2">
+              Where We're Going
+            </h1>
+            <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto px-4 mt-8 sm:mt-12">
+              Lyvora is not just another crypto marketplace. It's a true gateway from Web2 into Web3.
+            </p>
           </motion.div>
         </div>
+      </section>
 
-        {/* Enhanced Scroll Indicator */}
-        {/* <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-        >
-          <motion.div
-            className="flex flex-col items-center cursor-pointer group"
-            whileHover={{ scale: 1.1 }}
-            onClick={() => {
-              const featuresSection = document.getElementById("features")
-              featuresSection?.scrollIntoView({ behavior: "smooth" })
-            }}
-          >
-            <div className="w-8 h-12 border-2 border-white/30 rounded-full flex justify-center backdrop-blur-sm group-hover:border-purple-400 transition-colors duration-300">
+      {/* Main Content */}
+      <section className="py-16 sm:py-20">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              className="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 backdrop-blur-sm mb-8 sm:mb-12"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <motion.p
+                className="text-white/90 text-lg leading-relaxed mb-8"
+                variants={fadeInUp}
+                initial="initial"
+                animate="animate"
+                transition={{ delay: 0.3 }}
+              >
+                Lyvora is not just another crypto marketplace. It's a true gateway from Web2 into Web3 — a new standard
+                for physical product commerce. Our value proposition is simple yet transformative: combine the global
+                reach and efficiency of traditional marketplaces with the power of decentralization, freedom, and
+                transparency.
+              </motion.p>
+
               <motion.div
-                className="w-1.5 h-4 bg-gradient-to-b from-purple-400 to-blue-400 rounded-full mt-2"
-                animate={{ y: [0, 16, 0] }}
-                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-              />
-            </div>
-            <motion.div
-              className="mt-2 text-white/60 text-xs group-hover:text-purple-400 transition-colors duration-300"
-              animate={{ opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-            >
-              <ChevronDown className="h-4 w-4" />
-            </motion.div>
-          </motion.div>
-        </motion.div> */}
-      </section>
-
-      {/* Enhanced Trust Indicators with Sliding Images */}
-      <motion.section
-        className="py-12 sm:py-16 border-b border-white/10 overflow-hidden"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="container mx-auto px-4 sm:px-6">
-          <motion.p
-            className="text-center text-white/60 mb-12 sm:mb-12 text-3xl sm:text-2xl text-bold"
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            <span className="text-3xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">
-              Global leaders trust Lyvora to secure their commerce
-            </span>
-          </motion.p>
-
-          {/* Sliding Images Container */}
-          <div className="relative w-full overflow-hidden">
-            <motion.div
-              className="flex items-center gap-8 sm:gap-12 lg:gap-16"
-              animate={{
-                x: [0, -1500],
-              }}
-              transition={{
-                duration: 50,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "linear",
-              }}
-              style={{ width: "200%" }}
-            >
-              {/* First set of logos */}
-              {[
-                { name: "MERCADO LIBRE", logo: "/slides/MELI.png" },
-                { name: "AMAZON", logo: "/slides/amazon.jpg" },
-                { name: "ALIBABA", logo: "/slides/alibaba.png" },
-                { name: "SHOPEE", logo: "/slides/shopify.png" },
-                { name: "EBAY", logo: "/slides/ebay.png" },
-                { name: "JUMIA", logo: "/slides/jumia.png" },
-              ].map((company, index) => (
-                <motion.div
-                  key={`first-${company.name}`}
-                  className=""
-                  whileHover={{
-                    scale: 1.1,
-                    filter: "brightness(1.2)",
-                  }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <Image
-                    src={company.logo || "/placeholder.svg"}
-                    alt={company.name}
-                    width={200}
-                    height={60}
-                    className=""
-                  />
-                </motion.div>
-              ))}
-
-              {/* Duplicate set for seamless loop */}
-              {[
-                { name: "MERCADO LIBRE", logo: "/slides/MELI.png" },
-                { name: "AMAZON", logo: "/slides/amazon.jpg" },
-                { name: "ALIBABA", logo: "/slides/alibaba.png" },
-                { name: "SHOPEE", logo: "/slides/shopify.png" },
-                { name: "EBAY", logo: "/slides/ebay.png" },
-              ].map((company, index) => (
-                <motion.div
-                  key={`second-${company.name}`}
-                  className=""
-                  whileHover={{
-                    scale: 1.1,
-                    filter: "brightness(1.2)",
-                  }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <Image src={company.logo || ""} alt={company.name} width={200} height={60} className="" />
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Enhanced Features Section with Enhanced Cards */}
-      <motion.section
-        id="features"
-        className="py-16 sm:py-20"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="container mx-auto px-4 sm:px-6">
-          <motion.div
-            className="text-center mb-12 sm:mb-16"
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">Why Choose Lyvora?</h2>
-            <p className="text-lg sm:text-xl text-white/60">Revolutionizing commerce with blockchain technology</p>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto"
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            {[
-              {
-                icon: TrendingUp,
-                title: "How Lyvora Makes Money",
-                color: "green",
-                variant: "glow" as const,
-                items: [
-                  "Only 2.5% transaction fee",
-                  "No listing or monthly fees",
-                  "Transparent conversion fees",
-                  "Premium features via staking",
-                ],
-              },
-              {
-                icon: Star,
-                title: "Why Lyvora?",
-                color: "purple",
-                variant: "gradient" as const,
-                items: [
-                  "True decentralization",
-                  "Global reach, no borders",
-                  "Smart contract escrow",
-                  "NFT reputation rewards",
-                ],
-              },
-              {
-                icon: Shield,
-                title: "Security & Trust",
-                color: "blue",
-                variant: "glass" as const,
-                items: ["Smart contract escrow", "On-chain reputation", "No KYC required", "Transparent disputes"],
-              },
-            ].map((feature, index) => (
-              <motion.div key={feature.title} variants={index % 2 === 0 ? slideInLeft : slideInRight}>
-                <EnhancedCard variant={feature.variant} className="h-full">
-                  <EnhancedCardHeader className="pb-4">
-                    <EnhancedCardTitle className="text-xl">{feature.title}</EnhancedCardTitle>
-                  </EnhancedCardHeader>
-                  <EnhancedCardContent className="text-white/70">
-                    <ul className="space-y-3">
-                      {feature.items.map((item, itemIndex) => (
-                        <motion.li
-                          key={itemIndex}
-                          className="flex items-start gap-3"
-                          initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.3, delay: itemIndex * 0.1 }}
-                          viewport={{ once: true }}
-                        >
-                          <CheckCircle className={`h-4 w-4 text-${feature.color}-400 mt-1 flex-shrink-0`} />
-                          {item}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </EnhancedCardContent>
-                </EnhancedCard>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* Enhanced Roadmap Section */}
-      <section id="roadmap" className="py-16 sm:py-20 bg-white/5 border-y border-white/10">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">Roadmap</h2>
-            <p className="text-lg sm:text-xl text-white/60">Our journey to revolutionize decentralized commerce</p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-8 sm:space-y-12">
-              {[
-                {
-                  phase: "Phase 1 — Near Completion",
-                  title: "Laying the Foundation",
-                  status: "completed",
-                  icon: CheckCircle,
-                  color: "purple",
-                  items: [
-                    "✅ Project ideation and validation",
-                    "✅ Core vision finalization",
-                    "✅ Professional landing page",
-                    "✅ Community channels setup",
-                    "✅ Core team assembly",
-                    "✅ Strategic planning",
-                  ],
-                },
-                {
-                  phase: "Phase 2 — In Progress",
-                  title: "Interface Design and Technical Setup",
-                  status: "progress",
-                  icon: Zap,
-                  color: "purple",
-                  items: [
-                    "✅ Official landing page completion",
-                    "✅ MVP interface development",
-                    "🔄 Smart contract development",
-                    "🔄 Grant applications",
-                    "🔄 Community growth",
-                    "🔄 On-chain reputation building",
-                  ],
-                },
-                {
-                  phase: "Phase 3 — Next Steps",
-                  title: "MVP Integration and Testnet Launch",
-                  status: "upcoming",
-                  icon: Target,
-                  color: "purple",
-                  items: [
-                    "🎯 Full MVP integration",
-                    "🎯 Testnet deployment",
-                    "🎯 On-chain escrow simulation",
-                    "🎯 Reputation system launch",
-                    "🎯 Security audit",
-                    "🎯 Real user airdrop campaign",
-                  ],
-                },
-                {
-                  phase: "Phase 4 — Expansion & Governance",
-                  title: "Mainnet Launch and Global Scale",
-                  status: "future",
-                  icon: Rocket,
-                  color: "purple",
-                  items: [
-                    "🚀 Mainnet launch",
-                    "🚀 Lyvora Token introduction",
-                    "🚀 DAO formation",
-                    "🚀 Global expansion",
-                    "🚀 Advanced features rollout",
-                    "🚀 Mobile version launch",
-                  ],
-                },
-              ].map((phase, index) => (
-                <div key={index} className="flex gap-8">
-                  <div className="flex flex-col items-center">
-                    <div
-                      className={`h-12 w-12 bg-${phase.color}-500 rounded-full flex items-center justify-center shadow-lg`}
-                    >
-                      <phase.icon className="h-6 w-6 text-white" />
-                    </div>
-                    {index < 3 && <div className="w-px h-20 bg-gradient-to-b from-white/20 to-transparent mt-4" />}
-                  </div>
-                  <div className="flex-1 pb-8">
-                    <div>
-                      <Badge
-                        className={`bg-${phase.color}-500/20 text-${phase.color}-300 border-${phase.color}-500/30 mb-3`}
+                className="grid md:grid-cols-2 gap-8 mb-8"
+                variants={staggerContainer}
+                initial="initial"
+                animate="animate"
+                transition={{ delay: 0.4 }}
+              >
+                <motion.div variants={fadeInUp}>
+                  <h3 className="text-purple-300 font-semibold mb-4 text-lg flex items-center">
+                    <Target className="mr-2 h-5 w-5" />
+                    Building 100% on-chain on SUI blockchain:
+                  </h3>
+                  <ul className="space-y-3 text-white/80">
+                    {[
+                      "Eliminating middlemen and extremely high fees",
+                      "Enabling direct crypto payments between buyers and sellers",
+                      "Creating a fraud-proof on-chain reputation system",
+                      "Making the experience accessible even to users unfamiliar with Web3",
+                      "Providing video tutorials and educational support for real onboarding",
+                    ].map((item, index) => (
+                      <motion.li
+                        key={index}
+                        className="flex items-start gap-3"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
                       >
-                        {phase.phase}
-                      </Badge>
-                    </div>
-                    <h3 className="text-2xl font-semibold text-white mb-4">{phase.title}</h3>
-                    <div className="grid md:grid-cols-2 gap-4 text-white/70">
-                      {phase.items.map((item, itemIndex) => (
-                        <p key={itemIndex} className="mb-2">
-                          {item}
-                        </p>
-                      ))}
-                    </div>
+                        <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
+                        {item}
+                      </motion.li>
+                    ))}
+                  </ul>
+                </motion.div>
+
+                <motion.div variants={fadeInUp}>
+                  <h3 className="text-purple-300 font-semibold mb-4 text-lg flex items-center">
+                    <TrendingUp className="mr-2 h-5 w-5" />
+                    Why this matters
+                  </h3>
+                  <ul className="space-y-3 text-white/80">
+                    {[
+                      "Most Web3 projects are still stuck in niches like collectibles or gaming. Lyvora is betting on something bigger: real commerce, with real products and global users who seek freedom, efficiency, and savings.",
+                      "On SUI, every interaction will be an on-chain transaction: listing, buying, reviewing, reputation building. This generates real volume from real users — not just airdrop farmers.",
+                      "If Lyvora works (and it will), SUI will have the biggest real-world adoption case in Web3.",
+                      "This market already exists. It just needs to be set free.",
+                    ].map((item, index) => (
+                      <motion.li
+                        key={index}
+                        className="flex items-start gap-3"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                      >
+                        <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0" />
+                        <span className="text-white/80">{item}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                  <motion.div
+                    className="mt-6 text-center"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 1.2 }}
+                  >
+                    <p className="text-xl font-bold text-white">Let's make it happen.</p>
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+
+              <motion.div
+                className="bg-purple-500/10 rounded-xl p-6 border border-purple-500/20 backdrop-blur-sm"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+              >
+                <h3 className="text-purple-300 font-semibold mb-3 text-lg flex items-center">
+                  <Users className="mr-2 h-5 w-5" />Lyvora's Mission
+                </h3>
+                <div className="space-y-4 text-white/90">
+                  <p>
+                    To build a truly global and decentralized marketplace where anyone can buy and sell with full
+                    freedom, security, and control over their assets.
+                  </p>
+                  <p>
+                    Our mission is to eliminate borders, middlemen, and restrictions — connecting people around the
+                    world through a platform based on on-chain trust, direct crypto payments, and true inclusion.
+                  </p>
+                  <p className="font-semibold">
+                    We aim to revolutionize digital commerce by setting a new standard where the power belongs to users
+                    - not the platforms.
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Global Market Overview Section */}
+            <motion.div
+              className="bg-white/5 rounded-2xl p-8 border border-white/10 backdrop-blur-sm mb-8"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1 }}
+            >
+              <h2 className="text-3xl font-bold text-white mb-6 flex items-center">
+                <Globe className="mr-3 h-8 w-8" />Global Market Overview - Lyvora in Context
+              </h2>
+              <p className="text-white/80 mb-8">
+                Before we present Lyvora, it's essential to understand the real scalability of traditional marketplaces
+                across each continent - in terms of sellers, buyers, revenue, and potential. This demonstrates the Web3
+                opportunity we are aiming for.
+              </p>
+
+              {/* Strategic Impact */}
+              <div className="bg-blue-500/10 rounded-xl p-6 border border-blue-500/20 backdrop-blur-sm mb-8">
+                <h3 className="text-blue-300 font-semibold mb-4 text-lg flex items-center">
+                  <Target className="mr-2 h-5 w-5" />Strategic Impact for Lyvora
+                </h3>
+                <ul className="space-y-3 text-white/80">
+                  {[
+                    "The scale of the players shown - ranging from tens to hundreds of millions of users and billions in revenue - sets the benchmark for Lyvora's ambition.",
+                    "Their global reach confirms: even capturing 1% of this base already represents a massive Web3 use case and a relevant adoption driver for SUI.",
+                    "The roadmap is clear: we start in Latin America, expand globally, and prove that something decentralized can compete at this level.",
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <Star className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-6 p-4 bg-white/5 rounded-lg">
+                  <p className="text-white font-semibold mb-2">
+                    Lyvora has the opportunity to become the next big global marketplace, built on the success of Web2 players, but with:
+                  </p>
+                  <div className="grid md:grid-cols-2 gap-4 mt-4">
+                    {[
+                      { icon: Zap, text: "Lower flat fees (2.5%)" },
+                      { icon: Users, text: "Direct crypto payments" },
+                      { icon: Shield, text: "On-chain reputation" },
+                      { icon: Globe, text: "Borderless, no KYC" },
+                    ].map((feature, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <feature.icon className="h-4 w-4 text-purple-400" />
+                        <span className="text-white/80 text-sm">{feature.text}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+
+              {/* Regional Examples */}
+              <h3 className="text-2xl font-bold text-white mb-6">Strategic Regional Examples</h3>
+
+              <div className="space-y-6">
+                {/* Mercado Libre */}
+                <motion.div
+                  className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-xl p-6 border border-yellow-500/20"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                  viewport={{ once: true }}
+                >
+                  <h4 className="text-xl font-bold text-yellow-300 mb-4">🔹 Mercado Libre (Latin America)</h4>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <ul className="space-y-2 text-white/80">
+                        <li>• Present in 18 Latin American countries</li>
+                        <li>• Over 8 million sellers across the region</li>
+                        <li>• More than 200 million active users</li>
+                        <li>• Processes over 1 billion listings per year</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <div className="bg-white/5 rounded-lg p-4">
+                        <p className="text-yellow-300 font-semibold mb-2">Why does this matter for Lyvora?</p>
+                        <p className="text-white/80 text-sm mb-3">
+                          Latin America's strength as a logical starting point for Lyvora
+                        </p>
+                        <p className="text-yellow-300 font-semibold mb-2">Strategic Vision</p>
+                        <p className="text-white/80 text-sm">
+                          Even capturing just 1% of this ecosystem validates Lyvora as a massive Web3 case.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Amazon */}
+                <motion.div
+                  className="bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-xl p-6 border border-orange-500/20"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <h4 className="text-xl font-bold text-orange-300 mb-4">🔹 Amazon (North America & Global)</h4>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <ul className="space-y-2 text-white/80">
+                        <li>• Over 9.7 million active sellers worldwide</li>
+                        <li>• 310+ million customer accounts</li>
+                        <li>• Over $574 billion net revenue in 2023</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <div className="bg-white/5 rounded-lg p-4">
+                        <p className="text-orange-300 font-semibold mb-2">Why does this matter for Lyvora?</p>
+                        <p className="text-white/80 text-sm mb-3">
+                          Amazon demonstrates the power of global marketplaces at scale, powered by logistics and tech
+                        </p>
+                        <p className="text-orange-300 font-semibold mb-2">Strategic Vision</p>
+                        <p className="text-white/80 text-sm">
+                          With a decentralized approach, we can compete by offering lower costs and greater freedom
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Alibaba */}
+                <motion.div
+                  className="bg-gradient-to-r from-red-500/10 to-pink-500/10 rounded-xl p-6 border border-red-500/20"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  <h4 className="text-xl font-bold text-red-300 mb-4">🔹 Alibaba (China & Global)</h4>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <ul className="space-y-2 text-white/80">
+                        <li>• 1.31 billion annual active consumers in 2023</li>
+                        <li>• Revenue of approximately $130–137 billion between 2023 and 2024</li>
+                        <li>• Q4 2024 revenue: $38.4 billion (+8% YoY)</li>
+                        <li>• International commerce revenue: $4.3 billion (+36% YoY)</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <div className="bg-white/5 rounded-lg p-4">
+                        <p className="text-red-300 font-semibold mb-2">Why does this matter for Lyvora?</p>
+                        <p className="text-white/80 text-sm mb-3">
+                          Alibaba's massive scale proves the global appetite for e-commerce platforms
+                        </p>
+                        <p className="text-red-300 font-semibold mb-2">Strategic Vision</p>
+                        <p className="text-white/80 text-sm">
+                          Lyvora can mirror this international growth by using decentralization and lower fees as its
+                          competitive edge.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Shopee */}
+                <motion.div
+                  className="bg-gradient-to-r from-green-500/10 to-teal-500/10 rounded-xl p-6 border border-green-500/20"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  viewport={{ once: true }}
+                >
+                  <h4 className="text-xl font-bold text-green-300 mb-4">
+                    🔹 SHOPEE (Sea Group) - Southeast Asia & Latin America
+                  </h4>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <p className="text-green-300 font-semibold mb-2">2024 Full-Year Results</p>
+                      <ul className="space-y-2 text-white/80 text-sm">
+                        <li>• Total GAAP revenue: $16.8 billion (+28.8% YoY)</li>
+                        <li>• E-commerce revenue: $12.4 billion (+37.9% YoY)</li>
+                        <li>• GMV: $100.5 billion (+28.0% YoY)</li>
+                        <li>• Gross orders: 10.9 billion (+33.0% YoY)</li>
+                      </ul>
+                      <p className="text-green-300 font-semibold mb-2 mt-4">Q4 2024 Highlights</p>
+                      <ul className="space-y-2 text-white/80 text-sm">
+                        <li>• E-commerce revenue (Q4): $3.7 billion (+41.3% YoY)</li>
+                        <li>• GMV (Q4): $28.6 billion (+23.5% YoY)</li>
+                        <li>• Gross orders (Q4): 3.0 billion (+20.1% YoY)</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <div className="bg-white/5 rounded-lg p-4">
+                        <p className="text-green-300 font-semibold mb-2">Why does this matter for Lyvora?</p>
+                        <p className="text-white/80 text-sm mb-3">
+                          Strategic validation: Shopee's scale and profitability prove aggressive growth is feasible
+                          even in emerging markets.
+                        </p>
+                        <p className="text-green-300 font-semibold mb-2">Strategic Vision</p>
+                        <p className="text-white/80 text-sm">
+                          Shopee demonstrates that platforms can achieve rapid volume—Lyvora can mimic this trajectory,
+                          using decentralization and lower fees as key differentiators.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Additional platforms in a more compact format */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Jumia */}
+                  <motion.div
+                    className="bg-gradient-to-r from-purple-500/10 to-indigo-500/10 rounded-xl p-6 border border-purple-500/20"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    viewport={{ once: true }}
+                  >
+                    <h4 className="text-lg font-bold text-purple-300 mb-3">🔹 Jumia (Africa)</h4>
+                    <ul className="space-y-1 text-white/80 text-sm mb-4">
+                      <li>• Q1 2025 revenue: $36.3 million</li>
+                      <li>• GMV: $161.7 million in Q1 2025</li>
+                      <li>• 2.1 million quarterly active customers (+15%)</li>
+                    </ul>
+                    <div className="bg-white/5 rounded-lg p-3">
+                      <p className="text-purple-300 font-semibold text-sm mb-1">Strategic Vision</p>
+                      <p className="text-white/80 text-xs">
+                        Jumia's momentum validates Africa as a strategic continent for Lyvora's decentralized
+                        marketplace.
+                      </p>
+                    </div>
+                  </motion.div>
+
+                  {/* eBay */}
+                  <motion.div
+                    className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-xl p-6 border border-blue-500/20"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    viewport={{ once: true }}
+                  >
+                    <h4 className="text-lg font-bold text-blue-300 mb-3">🔹 eBay (Global & Oceania)</h4>
+                    <ul className="space-y-1 text-white/80 text-sm mb-4">
+                      <li>• Revenue: $2.6 billion in Q1 2025 (+2% YoY)</li>
+                      <li>• GMV: $18.8 billion in Q1 2025 (+2% YoY)</li>
+                      <li>• 134 million active buyers globally</li>
+                    </ul>
+                    <div className="bg-white/5 rounded-lg p-3">
+                      <p className="text-blue-300 font-semibold text-sm mb-1">Strategic Vision</p>
+                      <p className="text-white/80 text-xs">
+                        Even a slice of eBay's global volume would make Lyvora a significant use case on SUI.
+                      </p>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Summary */}
+              <motion.div
+                className="mt-8 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-xl p-6 border border-purple-500/20"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                  <CheckCircle className="mr-2 h-6 w-6 text-green-400" />Summary
+                </h3>
+                <p className="text-white/80 mb-4 text-sm">
+                  All numbers above are sourced from official investor reports and reputable financial news.
+                </p>
+
+                <div className="bg-white/5 rounded-lg p-4">
+                  <h4 className="text-purple-300 font-semibold mb-3">Consolidated Strategy</h4>
+                  <ul className="space-y-2 text-white/80 text-sm">
+                    <li>
+                      <strong>Strong regional scale:</strong> Even without Amazon-level reach, these platforms show real
+                      traction in mature markets.
+                    </li>
+                    <li>
+                      <strong>Diverse models:</strong> Each delivers unique value — local citizen focus, niche
+                      specialization, hybrid marketplaces — opening unique opportunities.
+                    </li>
+                    <li>
+                      <strong>Validation for Lyvora:</strong> Even 1% of this scale makes Lyvora a major SUI/Web3 case.
+                      Ambition backed by facts, not fantasy.
+                    </li>
+                  </ul>
+                </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Sleek Join Waitlist Section */}
-      <section className="py-20 sm:py-24 bg-gradient-to-br from-purple-900/10 via-black to-blue-900/10 relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="max-w-4xl mx-auto">
-            {/* Header */}
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl mb-6">
-                <Image src="/logo-new.png" alt="Lyvora" width={50} height={16} className="brightness-0 invert" />
-              </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">Join the Lyvora</h2>
-              {/* <p className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto">
-                Be among the first to experience true decentralized commerce. Get early access and exclusive updates.
-              </p> */}
+      {/* CTA Section */}
+      <section className="py-16 sm:py-20 bg-gradient-to-r from-purple-900/20 to-blue-900/20">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6">Ready to Join the Lyvora?</h2>
+            <p className="text-white/70 mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base">
+              Be part of the future of decentralized commerce. Join our waitlist and get early access to Lyvora.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-md sm:max-w-none mx-auto">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-purple-900 to-black text-gray-300 hover:text-gray-200 w-full sm:w-auto"
+                  asChild
+                >
+                  <Link href="/#waitlist">Join Waitlist</Link>
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="bg-gradient-to-r from-purple-900 to-black text-gray-300 border-purple-500/30 hover:text-gray-200 w-full sm:w-auto"
+                  asChild
+                >
+                  <Link href="/pitch">Read Our Pitch</Link>
+                </Button>
+              </motion.div>
             </div>
-
-            {/* Form Container */}
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 sm:p-10 shadow-2xl">
-              <form className="space-y-6">
-                {/* Form Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Profile Field */}
-                  <div className="md:col-span-1">
-                    <label className="block text-white font-medium mb-3 text-sm">Your FullName</label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        placeholder="your fullname here"
-                        className="w-full h-14 bg-white/10 border border-white/20 rounded-xl px-4 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
-                        required
-                      />
-                    </div>
-                  </div>
-                  {/* Email Field */}
-                  <div className="md:col-span-1">
-                    <label className="block text-white font-medium mb-3 text-sm">Email Address</label>
-                    <div className="relative">
-                      <input
-                        type="email"
-                        placeholder="your@email.com"
-                        className="w-full h-14 bg-white/10 border border-white/20 rounded-xl px-4 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  {/* New Required Question */}
-                  <div className="md:col-span-2">
-                    <label className="block text-white font-medium mb-3 text-sm">
-                      Which of these best describes you? <span className="text-red-400">*</span>
-                    </label>
-                    <select
-                      className="w-full h-14 bg-white/10 border border-white/20 rounded-xl px-4 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 appearance-none cursor-pointer"
-                      required
-                    >
-                      <option value="" className="bg-gray-900 text-white">
-                        Select the option that best describes you
-                      </option>
-                      <option value="traditional-seller" className="bg-gray-900 text-white">
-                        I sell on traditional marketplaces (e.g., Amazon, AliExpress, Shopee, Mercado Libre)
-                      </option>
-                      <option value="web3-user" className="bg-gray-900 text-white">
-                        I already use Web3 platforms and know about crypto/blockchain
-                      </option>
-                      <option value="want-to-start" className="bg-gray-900 text-white">
-                        I don't sell online yet, but I want to start
-                      </option>
-                      <option value="other" className="bg-gray-900 text-white">
-                        Other (please specify)
-                      </option>
-                    </select>
-                  </div>
-
-                  {/* Country Field - moved after the new question */}
-                  <div className="md:col-span-1">
-                    <label className="block text-white font-medium mb-3 text-sm">Where are you from?</label>
-                    <select className="w-full h-14 bg-white/10 border border-white/20 rounded-xl px-4 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 appearance-none cursor-pointer">
-                      <option value="" className="bg-gray-900 text-white">
-                        Select your country
-                      </option>
-                      <option value="us" className="bg-gray-900 text-white">
-                        United States
-                      </option>
-                      <option value="ca" className="bg-gray-900 text-white">
-                        Canada
-                      </option>
-                      <option value="mx" className="bg-gray-900 text-white">
-                        Mexico
-                      </option>
-                      <option value="br" className="bg-gray-900 text-white">
-                        Brazil
-                      </option>
-                      <option value="ar" className="bg-gray-900 text-white">
-                        Argentina
-                      </option>
-                      <option value="uk" className="bg-gray-900 text-white">
-                        United Kingdom
-                      </option>
-                      <option value="de" className="bg-gray-900 text-white">
-                        Germany
-                      </option>
-                      <option value="fr" className="bg-gray-900 text-white">
-                        France
-                      </option>
-                      <option value="es" className="bg-gray-900 text-white">
-                        Spain
-                      </option>
-                      <option value="it" className="bg-gray-900 text-white">
-                        Italy
-                      </option>
-                      <option value="jp" className="bg-gray-900 text-white">
-                        Japan
-                      </option>
-                      <option value="kr" className="bg-gray-900 text-white">
-                        South Korea
-                      </option>
-                      <option value="au" className="bg-gray-900 text-white">
-                        Australia
-                      </option>
-                      <option value="in" className="bg-gray-900 text-white">
-                        India
-                      </option>
-                      <option value="sg" className="bg-gray-900 text-white">
-                        Singapore
-                      </option>
-                      <option value="other" className="bg-gray-900 text-white">
-                        Other
-                      </option>
-                    </select>
-                  </div>
-
-                  {/* Profile Field - keep as is but move to second column */}
-                  <div className="md:col-span-1">
-                    <label className="block text-white font-medium mb-3 text-sm">I'm interested as a</label>
-                    <select className="w-full h-14 bg-white/10 border border-white/20 rounded-xl px-4 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 appearance-none cursor-pointer">
-                      <option value="" className="bg-gray-900 text-white">
-                        Select your role
-                      </option>
-                      <option value="buyer" className="bg-gray-900 text-white">
-                        Buyer
-                      </option>
-                      <option value="seller" className="bg-gray-900 text-white">
-                        Seller
-                      </option>
-                      <option value="both" className="bg-gray-900 text-white">
-                        Both
-                      </option>
-                      <option value="investor" className="bg-gray-900 text-white">
-                        Investor
-                      </option>
-                      <option value="developer" className="bg-gray-900 text-white">
-                        Developer
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Expectations Field */}
-                <div>
-                  <label className="block text-white font-medium mb-3 text-sm">
-                    What excites you most about Lyvora? (Optional)
-                  </label>
-                  <textarea
-                    placeholder="Share your thoughts..."
-                    rows={3}
-                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 resize-none"
-                  ></textarea>
-                  <div className="flex w-full mt-6">
-                    <button
-                      type="submit"
-                      className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center justify-center gap-3 min-w-[200px]"
-                    >
-                      <Users className="w-5 h-5" />
-                      Join Waitlist
-                      <ArrowRight className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12 text-center">
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-                <div className="text-2xl sm:text-3xl font-bold text-white mb-2">2.5%</div>
-                <div className="text-white/60 text-sm">Transaction Fee</div>
-              </div>
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-                <div className="text-2xl sm:text-3xl font-bold text-white mb-2">0</div>
-                <div className="text-white/60 text-sm">Hidden Fees</div>
-              </div>
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-                <div className="text-2xl sm:text-3xl font-bold text-white mb-2">∞</div>
-                <div className="text-white/60 text-sm">Global Reach</div>
-              </div>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -1085,3 +801,5 @@ export default function LyvoraLanding() {
     </div>
   )
 }
+
+export default VisionPage

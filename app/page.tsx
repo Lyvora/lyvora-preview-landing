@@ -593,8 +593,8 @@ export default function LyvoraLanding() {
                   icon: Zap,
                   color: "purple",
                   items: [
-                    "🔄 Official landing page completion",
-                    "🔄 MVP interface development",
+                    "✅ Official landing page completion",
+                    "✅ MVP interface development",
                     "🔄 Smart contract development",
                     "🔄 Grant applications",
                     "🔄 Community growth",
