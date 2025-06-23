@@ -666,7 +666,7 @@ export default function LyvoraLanding() {
       </section>
 
       {/* Sleek Join Waitlist Section */}
-      <section className="py-20 sm:py-24 bg-gradient-to-br from-purple-900/10 via-black to-blue-900/10 relative overflow-hidden">
+      <section id="waitlist" className="py-20 sm:py-24 bg-gradient-to-br from-purple-900/10 via-black to-blue-900/10 relative overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
@@ -872,7 +872,7 @@ export default function LyvoraLanding() {
               </form>
             </div>
 
-            {/* Stats */}
+            {/* Stats
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12 text-center">
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
                 <div className="text-2xl sm:text-3xl font-bold text-white mb-2">2.5%</div>
@@ -886,7 +886,7 @@ export default function LyvoraLanding() {
                 <div className="text-2xl sm:text-3xl font-bold text-white mb-2">∞</div>
                 <div className="text-white/60 text-sm">Global Reach</div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
