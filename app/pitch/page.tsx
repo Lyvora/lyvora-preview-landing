@@ -589,7 +589,7 @@ export default function PitchPage() {
               <div className="flex items-center space-x-4">
                 <Badge className="bg-green-500/20 text-green-300 border-green-500/30 text-xs">
                   <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse" />
-                  Live on Testnet
+                  Live on Testnet (comming soon)
                 </Badge>
               </div>
             </motion.div>
@@ -638,8 +638,8 @@ export default function PitchPage() {
               <div className="flex space-x-2">
                 {[
                   {
-                    href: "https://getlyvora.com",
-                    icon: "/icons/website.png",
+                    href: "https://github.com/Lyvora",
+                    icon: "/icons/github.png",
                     color: "pink",
                   },
                   {
