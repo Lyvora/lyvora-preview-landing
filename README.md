@@ -21,7 +21,7 @@ No borders. No middlemen. No KYC.
 This version is still in early visual development and currently managed privately.  
 The source code will be published when the preview is finalized.
 
-🧑‍🎨 **Designer**: Lissa  
+🧑‍💻 **Front-end Developer**: Eric (Bitego)  
 🔒 **Code status**: Not public yet (in internal refinement phase)
 
 ---
@@ -41,7 +41,7 @@ Lyvora is a decentralized marketplace for real-world products:
 
 - 🔗 GitHub Organization: [github.com/Lyvora](https://github.com/Lyvora)  
 - 🐦 Twitter (X): [@LyvoraOfficial](https://twitter.com/LyvoraOfficial)  
-- 💬 Discord: [Join our community](https://discord.gg/jtnDYseC)  
+- 💬 Discord: [Join our community](https://discord.gg/wa3aMU5pmH)  
 - 📫 Contact: contact@getlyvora.com
 
 ---
